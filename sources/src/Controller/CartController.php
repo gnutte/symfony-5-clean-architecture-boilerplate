@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Domain\Model\Cart;
-use App\Domain\Model\CartItem;
+use App\Domain\Event\Exceptions\Model\Cart\CartCanNotBeSavedException;
+use App\Domain\Gateways\CartGateway;
+use App\Domain\Gateways\UserGateway;
 use App\Domain\Model\User;
 use App\Entity\CartImpl;
-use App\Entity\CartItemImpl;
 use App\Form\AddToCartFormType;
-use App\Repository\CartItemRepository;
-use App\Repository\CartRepository;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,41 +19,35 @@ use Twig\Environment;
 
 class CartController
 {
-    private CartRepository $cartRepository;
-    private UserRepository $userRepository;
+    private CartGateway $cartGateway;
+    private UserGateway $userGateway;
     private FormFactoryInterface $formFactory;
     private Environment $twig;
-    private EntityManagerInterface $entityManager;
-    private CartItemRepository $cartItemRepository;
     private SessionInterface $session;
 
     public function __construct(
         SessionInterface $session,
-        UserRepository $userRepository,
-        CartRepository $cartRepository,
-        CartItemRepository $cartItemRepository,
-        EntityManagerInterface $entityManager,
+        UserGateway $userGateway,
+        CartGateway $cartRepository,
         FormFactoryInterface $formFactory,
         Environment $twig
     ) {
-        $this->cartRepository = $cartRepository;
+        $this->cartGateway = $cartRepository;
         $this->formFactory = $formFactory;
         $this->twig = $twig;
-        $this->entityManager = $entityManager;
-        $this->userRepository = $userRepository;
-        $this->cartItemRepository = $cartItemRepository;
+        $this->userGateway = $userGateway;
         $this->session = $session;
     }
 
     public function __invoke(Request $request): Response
     {
         /** @var User $user */
-        $user = $this->userRepository->findOneBy(['username' => 'root']);
+        $user = $this->userGateway->retrieve('root');
 
         $form = $this->formFactory->create(AddToCartFormType::class);
         $form->handleRequest($request);
 
-        $cart = $this->cartRepository->findOneBy(['user' => $user->getUsername()]);
+        $cart = $this->cartGateway->retrieveCartForUser($user);
         if(null == $cart) {
             $cart = new CartImpl($user);
         }
@@ -66,8 +57,11 @@ class CartController
 
             $cart->add($data['product'], intval($data['quantity']));
 
-            $this->entityManager->persist($cart);
-            $this->entityManager->flush();
+            try {
+                $this->cartGateway->update($cart);
+            } catch (CartCanNotBeSavedException $e) {
+                $form->addError(new FormError($e->getMessage()));
+            }
         }
 
         return new Response(
