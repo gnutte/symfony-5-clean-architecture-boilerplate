@@ -2,7 +2,7 @@
 
 namespace App\Domain\Gateways;
 
-use App\Entity\Product;
+use App\Domain\Model\Product;
 
 interface CartItemGateway
 {

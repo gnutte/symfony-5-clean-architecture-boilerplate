@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Entity\CartItem;
-use App\Entity\Product;
+use App\Domain\Model\Product;
+use App\Entity\ProductImpl;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -20,7 +20,7 @@ class AddToCartFormType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('product', EntityType::class, [
-            'class' => Product::class,
+            'class' => ProductImpl::class,
             'choice_label' => 'title'
         ]);
         $builder->add('quantity', NumberType::class);

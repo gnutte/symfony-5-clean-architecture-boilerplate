@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Cart;
-use App\Entity\CartItem;
-use App\Entity\User;
+use App\Domain\Model\Cart;
+use App\Domain\Model\CartItem;
+use App\Entity\CartImpl;
+use App\Entity\CartItemImpl;
 use App\Form\AddToCartFormType;
 use App\Repository\CartItemRepository;
 use App\Repository\CartRepository;
@@ -54,7 +55,7 @@ class CartController
         $form->handleRequest($request);
 
         if(null == $cartId) {
-            $cart = new Cart();
+            $cart = new CartImpl();
         }else{
             $cart = $this->cartRepository->find($cartId);
             if(null == $cart) {
@@ -67,7 +68,7 @@ class CartController
 
             $item = $this->cartItemRepository->getItemByProduct($data['product']);
             if(null == $item) {
-                $item = new CartItem();
+                $item = new CartItemImpl();
                 $item->setCart($cart);
                 $item->setProduct($data['product']);
             }

@@ -2,31 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Entity
- */
 class Product
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="id")
-     */
-    private int $id;
-
-    /**
-     * @ORM\Column(type="string", name="title")
-     */
-    private string $title;
-
-    /**
-     * @ORM\Column(type="float", name="price")
-     */
-    private float $price;
+    protected int $id;
+    protected string $title;
+    protected float $price;
 
     public function getTitle(): string
     {

@@ -2,37 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CartItemRepository")
- */
 class CartItem
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="id")
-     */
-    private int $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Cart", inversedBy="items", cascade={"persist"})
-     */
-    private Cart $cart;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Product")
-     * @ORM\JoinColumn(name="product", referencedColumnName="id")
-     */
-    private Product $product;
-
-    /**
-     * @ORM\Column(type="integer", name="quantity")
-     */
-    private int $quantity = 0;
+    protected int $id;
+    protected Cart $cart;
+    protected Product $product;
+    protected int $quantity = 0;
 
     public function setQuantity(int $quantity): CartItem
     {
