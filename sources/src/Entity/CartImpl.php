@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Domain\Model\Cart;
 use App\Domain\Model\CartItem;
+use App\Domain\Model\Product;
 use App\Domain\Model\User;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -36,8 +37,8 @@ class CartImpl extends Cart
      */
     protected Collection $items;
 
-    protected function createNewCartItemLine(): CartItem
+    protected function createNewCartItemLine(Cart $cart, Product $product): CartItem
     {
-        return new CartItemImpl();
+        return new CartItemImpl($cart, $product);
     }
 }

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-class Cart
+class Cart implements ModelInterface
 {
     protected User $user;
     protected Collection $items;
@@ -23,13 +23,11 @@ class Cart
     public function add(Product $product, int $quantity): Cart {
         $cartItem = $this->getCartItemForProduct($product);
         if(null == $cartItem) {
-            $cartItem = $this->createNewCartItemLine();
-            $cartItem->setCart($this);
-            $cartItem->setProduct($product);
-            $cartItem->setQuantity($quantity);
+            $cartItem = $this->createNewCartItemLine($this, $product);
+            $cartItem->increaseQuantity($quantity);
             $this->items->add($cartItem);
         }else{
-            $cartItem->setQuantity($cartItem->getQuantity() + $quantity);
+            $cartItem->increaseQuantity($quantity);
         }
 
         return $this;
@@ -47,7 +45,7 @@ class Cart
         if($quantity >= $cartItem->getQuantity()) {
             $this->items->removeElement($cartItem);
         }else{
-            $cartItem->setQuantity($cartItem->getQuantity() - $quantity);
+            $cartItem->decreaseQuantity($quantity);
         }
 
         return $this;
@@ -83,9 +81,9 @@ class Cart
         return null;
     }
 
-    protected function createNewCartItemLine(): CartItem
+    protected function createNewCartItemLine(Cart $cart, Product $product): CartItem
     {
-        $line = new CartItem();
+        $line = new CartItem($cart, $product);
         return $line;
     }
 }

@@ -4,33 +4,29 @@ declare(strict_types=1);
 
 namespace App\Domain\Model;
 
-class CartItem
+class CartItem implements ModelInterface
 {
-    protected int $id;
     protected Cart $cart;
     protected Product $product;
-    protected int $quantity = 0;
+    protected int $quantity;
 
-    public function setQuantity(int $quantity): CartItem
+    public function __construct(Cart $cart, Product $product)
     {
-        $this->quantity = $quantity;
-        return $this;
-    }
-
-    public function setProduct(Product $product): CartItem
-    {
+        $this->cart = $cart;
         $this->product = $product;
+        $this->quantity = 0;
+    }
+
+    public function increaseQuantity(int $quantity): CartItem
+    {
+        $this->quantity += $quantity;
         return $this;
     }
 
-    public function getId(): int
+    public function decreaseQuantity(int $quantity): CartItem
     {
-        return $this->id;
-    }
-
-    public function getProduct(): Product
-    {
-        return $this->product;
+        $this->quantity -= $quantity;
+        return $this;
     }
 
     public function getQuantity(): int
@@ -38,9 +34,8 @@ class CartItem
         return $this->quantity;
     }
 
-    public function setCart(Cart $cart): CartItem
+    public function getProduct(): Product
     {
-        $this->cart = $cart;
-        return $this;
+        return $this->product;
     }
 }

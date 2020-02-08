@@ -36,6 +36,6 @@ class CartItemImpl extends CartItem
     /**
      * @ORM\Column(type="integer", name="quantity")
      */
-    protected int $quantity = 0;
+    protected int $quantity;
 
 }
