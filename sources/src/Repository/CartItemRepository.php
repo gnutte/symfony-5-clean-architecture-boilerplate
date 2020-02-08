@@ -19,7 +19,7 @@ class CartItemRepository extends ServiceEntityRepository implements CartItemGate
 
     public function getItemByProduct(Product $product)
     {
-        return $this->findOneBy(['product' => $product->getId()]);
+        return $this->findOneBy(['product' => $product->getSku()]);
     }
 
 }

@@ -1,4 +1,4 @@
-App\Entity\User:
+App\Entity\UserImpl:
   user_1:
     username: root
     password: root

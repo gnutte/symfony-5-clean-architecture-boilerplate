@@ -1,4 +1,6 @@
-App\Entity\Product:
+App\Entity\ProductImpl:
   product_{1..10}:
-    title: <name()>
-    price: 10.00
+    __construct:
+      sku: 'XXXX-XXXX-XXXX-<current()>'
+      name: 'Product <current()>'
+      price: 10.00

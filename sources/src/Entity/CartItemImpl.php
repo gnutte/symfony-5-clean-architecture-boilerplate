@@ -29,7 +29,7 @@ class CartItemImpl extends CartItem
 
     /**
      * @ORM\ManyToOne(targetEntity="ProductImpl")
-     * @ORM\JoinColumn(name="product", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product", referencedColumnName="sku")
      */
     protected Product $product;
 

@@ -15,15 +15,14 @@ class ProductImpl extends Product
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="id")
+     * @ORM\Column(type="string", name="sku", unique=true)
      */
-    protected int $id;
+    protected string $sku;
 
     /**
-     * @ORM\Column(type="string", name="title")
+     * @ORM\Column(type="string", name="name")
      */
-    protected string $title;
+    protected string $name;
 
     /**
      * @ORM\Column(type="float", name="price")
