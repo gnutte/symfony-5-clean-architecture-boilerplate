@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Domain\Model\Cart;
+use App\Domain\Model\CartItem;
+use App\Domain\Model\User;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,13 +25,19 @@ class CartImpl extends Cart
     protected int $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="UserImpl")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     */
+    protected User $user;
+
+    /**
      * @ORM\OneToMany(targetEntity="CartItemImpl", mappedBy="cart", cascade={"persist"})
      * @ORM\JoinColumn(name="item", referencedColumnName="id")
      */
     protected Collection $items;
 
-    public function __construct()
+    protected function createNewCartItemLine(): CartItem
     {
-        $this->items = new ArrayCollection();
+        return new CartItemImpl();
     }
 }

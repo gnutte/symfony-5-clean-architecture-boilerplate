@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Domain\Model\Cart;
 use App\Domain\Model\CartItem;
+use App\Domain\Model\User;
 use App\Entity\CartImpl;
 use App\Entity\CartItemImpl;
 use App\Form\AddToCartFormType;
@@ -49,41 +50,24 @@ class CartController
 
     public function __invoke(Request $request): Response
     {
-        $cartId = $this->session->get('cart');
+        /** @var User $user */
+        $user = $this->userRepository->findOneBy(['username' => 'root']);
 
         $form = $this->formFactory->create(AddToCartFormType::class);
         $form->handleRequest($request);
 
-        if(null == $cartId) {
-            $cart = new CartImpl();
-        }else{
-            $cart = $this->cartRepository->find($cartId);
-            if(null == $cart) {
-                $cart = new Cart();
-            }
+        $cart = $this->cartRepository->findOneBy(['user' => $user->getId()]);
+        if(null == $cart) {
+            $cart = new CartImpl($user);
         }
 
         if($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $item = $this->cartItemRepository->getItemByProduct($data['product']);
-            if(null == $item) {
-                $item = new CartItemImpl();
-                $item->setCart($cart);
-                $item->setProduct($data['product']);
-            }
+            $cart->add($data['product'], intval($data['quantity']));
 
-            $item->setQuantity($item->getQuantity() + intval($data['quantity']));
-
-            $this->entityManager->persist($item);
+            $this->entityManager->persist($cart);
             $this->entityManager->flush();
-
-            $this->session->set('cart', $cart->getId());
-        }
-
-        $total = 0;
-        foreach ($cart->getItems() as $item) {
-            $total += $item->getProduct()->getPrice() * $item->getQuantity();
         }
 
         return new Response(
@@ -92,7 +76,7 @@ class CartController
                 [
                     'form' => $form->createView(),
                     'items' => $cart->getItems(),
-                    'total' => $total
+                    'total' => $cart->getTotalPrice()
                 ]
             )
         );
