@@ -1,0 +1,4 @@
+App\Entity\Product:
+  product_{1..10}:
+    title: <name()>
+    price: 10.00
