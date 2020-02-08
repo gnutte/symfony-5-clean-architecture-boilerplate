@@ -56,7 +56,7 @@ class CartController
         $form = $this->formFactory->create(AddToCartFormType::class);
         $form->handleRequest($request);
 
-        $cart = $this->cartRepository->findOneBy(['user' => $user->getId()]);
+        $cart = $this->cartRepository->findOneBy(['user' => $user->getUsername()]);
         if(null == $cart) {
             $cart = new CartImpl($user);
         }

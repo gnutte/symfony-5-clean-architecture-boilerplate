@@ -15,13 +15,7 @@ class UserImpl extends User
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="id")
-     */
-    protected int $id;
-
-    /**
-     * @ORM\Column(type="string", name="username")
+     * @ORM\Column(type="string", name="username", unique=true)
      */
     protected string $username;
 

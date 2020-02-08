@@ -4,36 +4,49 @@ declare(strict_types=1);
 
 namespace App\Domain\Model;
 
-class User
+use App\Domain\Event\Exceptions\Model\BadModelDataException;
+
+class User implements ModelInterface
 {
-    protected int $id;
     protected string $username;
     protected string $password;
 
-    public function getPassword(): string
+    /**
+     * @throws BadModelDataException
+     */
+    public function __construct(string $username)
     {
-        return $this->password;
+        $this->setUsername($username);
     }
 
-    public function setPassword(string $password): User
+    /**
+     * @throws BadModelDataException
+     */
+    protected function setUsername(string $username): void
     {
+        if ('' === $username) {
+            throw new BadModelDataException($this, 'username', 'User login can not be empty.');
+        }
+
+        $this->username = $username;
+    }
+
+    /**
+     * @throws BadModelDataException
+     */
+    public function updatePassword(string $password): User
+    {
+        if('' === $password) {
+            throw new BadModelDataException($this, 'password', 'User password can not be empty.');
+        }
+
         $this->password = $password;
+
         return $this;
     }
 
     public function getUsername(): string
     {
         return $this->username;
-    }
-
-    public function setUsername(string $username): User
-    {
-        $this->username = $username;
-        return $this;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
     }
 }

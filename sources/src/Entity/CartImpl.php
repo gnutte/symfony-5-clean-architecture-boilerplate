@@ -27,7 +27,7 @@ class CartImpl extends Cart
 
     /**
      * @ORM\OneToOne(targetEntity="UserImpl")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user", referencedColumnName="username")
      */
     protected User $user;
 

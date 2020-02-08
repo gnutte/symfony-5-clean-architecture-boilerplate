@@ -1,4 +1,5 @@
 App\Entity\UserImpl:
   user_1:
-    username: root
-    password: root
+    __construct:
+      username: root
+    updatePassword: root
