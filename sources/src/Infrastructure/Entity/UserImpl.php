@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Infrastructure\Entity;
 
 use App\Domain\Model\User;
 use Doctrine\ORM\Mapping as ORM;

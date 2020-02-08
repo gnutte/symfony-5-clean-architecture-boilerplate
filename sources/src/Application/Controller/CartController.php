@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Application\Controller;
 
 use App\Domain\Event\Exceptions\Model\Cart\CartCanNotBeSavedException;
 use App\Domain\Gateways\CartGateway;
 use App\Domain\Gateways\UserGateway;
 use App\Domain\Model\User;
-use App\Entity\CartImpl;
-use App\Form\AddToCartFormType;
+use App\Infrastructure\Entity\CartImpl;
+use App\Application\Form\AddToCartFormType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;

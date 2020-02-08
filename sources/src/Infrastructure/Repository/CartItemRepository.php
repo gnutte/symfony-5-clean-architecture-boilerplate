@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace App\Infrastructure\Repository;
 
 use App\Domain\Gateways\CartItemGateway;
 use App\Domain\Model\Product;
-use App\Entity\CartItemImpl;
+use App\Infrastructure\Entity\CartItemImpl;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

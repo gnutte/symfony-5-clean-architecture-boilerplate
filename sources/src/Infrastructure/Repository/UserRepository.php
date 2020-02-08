@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace App\Infrastructure\Repository;
 
 use App\Domain\Gateways\UserGateway;
 use App\Domain\Model\User;
-use App\Entity\UserImpl;
+use App\Infrastructure\Entity\UserImpl;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

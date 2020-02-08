@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Infrastructure\Entity;
 
 use App\Domain\Model\Cart;
 use App\Domain\Model\CartItem;
 use App\Domain\Model\Product;
 use App\Domain\Model\User;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**

@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Form;
+namespace App\Application\Form;
 
-use App\Domain\Model\Product;
-use App\Entity\ProductImpl;
+use App\Infrastructure\Entity\ProductImpl;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddToCartFormType extends AbstractType
 {

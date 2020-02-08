@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace App\Infrastructure\Repository;
 
 use App\Domain\Event\Exceptions\Model\Cart\CartCanNotBeSavedException;
 use App\Domain\Gateways\CartGateway;
 use App\Domain\Model\Cart;
 use App\Domain\Model\User;
-use App\Entity\CartImpl;
+use App\Infrastructure\Entity\CartImpl;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
