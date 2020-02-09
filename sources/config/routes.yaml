@@ -1,3 +1,9 @@
-index:
+cart_display:
     path: /
-    controller: App\Application\Controller\CartController
+    methods: GET
+    controller: App\Application\Controller\Cart\DisplayCart
+
+cart_update:
+    path: /
+    methods: POST
+    controller: App\Application\Controller\Cart\AddItemToCart

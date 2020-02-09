@@ -16,4 +16,9 @@ interface CartGateway
      * @throws CartCanNotBeSavedException
      */
     public function update(Cart $cart): CartGateway;
+
+    /**
+     * @throws CartCanNotBeSavedException
+     */
+    public function createForUser(User $user): Cart;
 }

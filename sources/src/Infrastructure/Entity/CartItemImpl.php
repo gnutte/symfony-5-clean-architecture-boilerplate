@@ -10,7 +10,7 @@ use App\Domain\Model\Product;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CartItemRepository")
+ * @ORM\Entity(repositoryClass="App\Infrastructure\Repository\CartItemRepository")
  * @ORM\Table(name="cart_item")
  */
 class CartItemImpl extends CartItem

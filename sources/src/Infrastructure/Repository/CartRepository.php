@@ -42,4 +42,21 @@ class CartRepository extends ServiceEntityRepository implements CartGateway
             throw new CartCanNotBeSavedException($e->getMessage());
         }
     }
+
+    /**
+     * @throws CartCanNotBeSavedException
+     */
+    public function createForUser(User $user): Cart
+    {
+        $cart = new CartImpl($user);
+
+        try {
+            $this->_em->persist($cart);
+            $this->_em->flush();
+
+            return $cart;
+        } catch (OptimisticLockException|ORMException $e) {
+            throw new CartCanNotBeSavedException($e->getMessage());
+        }
+    }
 }

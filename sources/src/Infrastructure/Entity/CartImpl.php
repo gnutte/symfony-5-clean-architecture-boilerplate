@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CartRepository")
+ * @ORM\Entity(repositoryClass="App\Infrastructure\Repository\CartRepository")
  * @ORM\Table(name="cart")
  */
 class CartImpl extends Cart

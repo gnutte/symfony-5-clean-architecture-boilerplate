@@ -8,7 +8,7 @@ use App\Domain\Model\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Infrastructure\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
 class UserImpl extends User

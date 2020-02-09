@@ -2,12 +2,12 @@
 
 {% block body %}
     <div class="cart">
-        {% for item in items %}
+        {% for item in view.items %}
             <div class="cart-item">
                 {{ item.product.name }} : {{ item.quantity }}
             </div>
         {% endfor %}
     </div>
-    <div class="cart-total">{{ total }}</div>
+    <div class="cart-total">{{ view.totalPrice }}</div>
     <div class="add-to-cart">{{ form(form) }}</div>
 {% endblock %}
